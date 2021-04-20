@@ -5,19 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Data
+namespace BookStore.Models
 {
-    public class Author
+    public class AuthorCreate
     {
-        [Key]
-        public int AuthorId { get; set; }
-
         [Required]
-        public string AuthorName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public DateTime Birthdate { get; set; }
-
-        public List<Book> BooksByAuthor { get; set; } = new List<Book>();
     }
 }
