@@ -9,9 +9,9 @@ namespace BookStore.Models
 {
     public class AuthorDetail
     {
-        public int Id { get; set; }
+        public int AuthorId { get; set; }
         public string AuthorName { get; set; }
         public DateTime Birthdate { get; set; }
-        public List<Book> BooksByAuthor { get; set; } = new List<Book>();
+        public List<string> NamesOfBooksByAuthor { get; set; } = new List<string>();
     }
 }
