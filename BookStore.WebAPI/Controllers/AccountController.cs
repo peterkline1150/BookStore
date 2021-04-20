@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using BookStore.WebAPI.Models;
 using BookStore.WebAPI.Providers;
 using BookStore.WebAPI.Results;
+using BookStore.Data;
 
 namespace BookStore.WebAPI.Controllers
 {
