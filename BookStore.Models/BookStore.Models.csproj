@@ -70,6 +70,10 @@
     <Compile Include="GenreList.cs" />
     <Compile Include="GenreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishingCompanyCreate.cs" />
+    <Compile Include="PublishingCompanyDetail.cs" />
+    <Compile Include="PublishingCompanyList.cs" />
+    <Compile Include="PublishingCompanyUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
