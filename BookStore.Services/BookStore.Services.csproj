@@ -54,11 +54,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartService.cs" />
+    <Compile Include="GenreService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookStore.Data\BookStore.Data.csproj">
+      <Project>{e2cd9260-933e-412a-b660-d4d978a7e2fe}</Project>
+      <Name>BookStore.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookStore.Models\BookStore.Models.csproj">
+      <Project>{4f3127f0-3bb2-469c-9766-8c07ae4c29da}</Project>
+      <Name>BookStore.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
