@@ -10,7 +10,7 @@ namespace BookStore.Models
     public class AuthorCreate
     {
         [Required]
-        public string Name { get; set; }
+        public string AuthorName { get; set; }
 
         [Required]
         public DateTime Birthdate { get; set; }

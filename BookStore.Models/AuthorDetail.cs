@@ -10,7 +10,7 @@ namespace BookStore.Models
     public class AuthorDetail
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string AuthorName { get; set; }
         public DateTime Birthdate { get; set; }
         public List<Book> BooksByAuthor { get; set; } = new List<Book>();
     }
