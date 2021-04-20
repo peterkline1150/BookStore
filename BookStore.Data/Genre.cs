@@ -13,5 +13,7 @@ namespace BookStore.Data
         public int GenreId { get; set; }
         [Required]
         public string GenreName { get; set; }
+
+        public List<Book> BooksInGenre { get; set; } = new List<Book>();
     }
 }

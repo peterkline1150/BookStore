@@ -18,5 +18,7 @@ namespace BookStore.Data
 
         [Required]
         public string PublishingCompanyAddress { get; set; }
+
+        public List<Book> BooksPublished { get; set; } = new List<Book>();
     }
 }
