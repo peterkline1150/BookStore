@@ -8,7 +8,7 @@ namespace BookStore.Models
 {
     public class AuthorList
     {
-        public int Id { get; set; }
+        public int AuthorId { get; set; }
         public string AuthorName { get; set; }
     }
 }
