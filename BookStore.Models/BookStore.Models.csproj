@@ -54,6 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartDetail.cs" />
+    <Compile Include="CartPurchase.cs" />
+    <Compile Include="CartUpdate.cs" />
+    <Compile Include="GenreCreate.cs" />
+    <Compile Include="GenreDelete.cs" />
+    <Compile Include="GenreList.cs" />
+    <Compile Include="GenreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
