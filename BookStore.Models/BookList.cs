@@ -13,5 +13,7 @@ namespace BookStore.Models
         public string Title { get; set; }
 
         public string AuthorName { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }
