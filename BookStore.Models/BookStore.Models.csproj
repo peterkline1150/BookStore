@@ -74,6 +74,10 @@
     <Compile Include="PublishingCompanyDetail.cs" />
     <Compile Include="PublishingCompanyList.cs" />
     <Compile Include="PublishingCompanyUpdate.cs" />
+    <Compile Include="RatingCreate.cs" />
+    <Compile Include="RatingDetail.cs" />
+    <Compile Include="RatingList.cs" />
+    <Compile Include="RatingUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
