@@ -17,11 +17,11 @@ namespace BookStore.Services
             _buyerId = buyerId;
         }
 
-        public bool UpdateCart(int bookId, int enterAnyNumberToRemoveBook = 0)
+        public bool UpdateCart(int bookId, int enter0ToAddToCart1ToRemove)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                if (enterAnyNumberToRemoveBook == 0)
+                if (enter0ToAddToCart1ToRemove == 0)
                 {
                     if (ctx.Cart.Count() == 0)
                     {

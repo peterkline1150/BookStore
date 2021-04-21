@@ -26,13 +26,15 @@ namespace BookStore.Services
                     EngagementScore = model.EngagementScore,
                     AuthorStyleScore = model.AuthorStyleScore,
                     Description = model.Description,
-                    BookId = model.BookId,
-                    UserId = _userId
+                    BookId = model.BookId
                 };
 
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Ratings.Add(entity);
+
+                var bookEntity = ctx.Books.Find(model.BookId);
+                bookEntity.RatingsForBook.Add(entity);
 
                 return ctx.SaveChanges() == 1;
             }

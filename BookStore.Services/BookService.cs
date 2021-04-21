@@ -48,6 +48,7 @@ namespace BookStore.Services
                 {
                     Title = e.Title,
                     AuthorName = e.Author.AuthorName,
+                    Date = e.Date,
                     BookId = e.BookId
                 });
 
@@ -69,6 +70,28 @@ namespace BookStore.Services
                 });
 
                 return query.ToArray();
+            }
+        }
+
+        public BookDetail GetBookById(int bookId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Books.Include(e => e.Author).Include(e => e.PublishingCompany).Include(e => e.Genre).Include(e => e.RatingsForBook)
+                    .Single(e => e.BookId == bookId);
+
+                return new BookDetail()
+                {
+                    BookId = entity.BookId,
+                    Title = entity.Title,
+                    AuthorName = entity.Author.AuthorName,
+                    GenreName = entity.Genre.GenreName,
+                    PublishingCompanyName = entity.PublishingCompany.PublishingCompanyName,
+                    Date = entity.Date,
+                    NumCopies = entity.NumCopies,
+                    Price = entity.Price,
+                    RatingsForBook = entity.RatingsForBook
+                };
             }
         }
 
