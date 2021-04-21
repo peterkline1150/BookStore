@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace BookStore.Services
 {
@@ -35,25 +36,26 @@ namespace BookStore.Services
                 return query.ToArray();
             }
         }
+
+
+
+
         public bool UpdateGenre(GenreUpdate model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx.Genres.Single(e => e.GenreId == model.GenreId);
-
                 entity.GenreName = model.GenreName;
-
                 return ctx.SaveChanges() == 1;
             }
         }
+
         public bool DeleteGenre(int genreId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx.Genres.Single(e => e.GenreId == genreId);
-
                 ctx.Genres.Remove(entity);
-
                 return ctx.SaveChanges() == 1;
             }
         }
