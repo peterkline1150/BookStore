@@ -46,9 +46,9 @@ namespace BookStore.Services
                 var query = ctx.Books.Include(e => e.Author).Select(e =>
                 new BookList()
                 {
-                    BookId = e.BookId,
                     Title = e.Title,
-                    AuthorName = e.Author.AuthorName
+                    AuthorName = e.Author.AuthorName,
+                    BookId = e.BookId
                 });
 
                 return query.ToArray();
@@ -62,6 +62,7 @@ namespace BookStore.Services
                 var query = ctx.Books.Include(e => e.Author).Where(e => e.Date >= startDate && e.Date <= endDate).Select(e =>
                 new BookList()
                 {
+                    Date = e.Date,
                     BookId = e.BookId,
                     Title = e.Title,
                     AuthorName = e.Author.AuthorName
