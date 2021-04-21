@@ -34,6 +34,16 @@ namespace BookStore.WebAPI.Controllers
             return Ok(genres);
         }
 
+        public IHttpActionResult Get(int genreId)
+        {
+            var genre = _service.GetAllBooksInGenre(genreId);
+            if (genre != null)
+            {
+                return Ok(genre);
+            }
+            return BadRequest("That ID does not exist.");
+        }
+
         public IHttpActionResult Put(GenreUpdate model)
         {
             if (!ModelState.IsValid)
@@ -45,7 +55,6 @@ namespace BookStore.WebAPI.Controllers
             {
                 return InternalServerError();
             }
-
             return Ok();
         }
 
@@ -55,7 +64,6 @@ namespace BookStore.WebAPI.Controllers
             {
                 return InternalServerError();
             }
-
             return Ok();
         }
 
