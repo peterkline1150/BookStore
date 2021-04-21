@@ -31,14 +31,34 @@ namespace BookStore.Services
             {
                 var query = ctx.Genres.Select(e => new GenreList
                 {
+                    GenreId = e.GenreId,
                     GenreName = e.GenreName
                 });
                 return query.ToArray();
             }
         }
 
+        public GenreDetail GetAllBooksInGenre(int genreId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Genres.Include(e => e.BooksInGenre)
+                    .Single(e => e.GenreId == genreId);
 
+                var titlesOfBooksInGenre = new List<string>();
+                foreach (var book in entity.BooksInGenre)
+                {
+                    titlesOfBooksInGenre.Add(book.Title);
+                }
 
+                return new GenreDetail()
+                {
+                    GenreId = entity.GenreId,
+                    GenreName = entity.GenreName,
+                    BooksTitlesInGenre = titlesOfBooksInGenre
+                }; 
+            }
+        }
 
         public bool UpdateGenre(GenreUpdate model)
         {
