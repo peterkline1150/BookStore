@@ -1,5 +1,6 @@
 ﻿using BookStore.Models;
 using BookStore.Services;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,22 @@ namespace BookStore.WebAPI.Controllers
     [Authorize]
     public class RatingController : ApiController
     {
-        private readonly RatingServices _service = new RatingServices();
+        private RatingServices CreateRatingService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var ratingService = new RatingServices(userId);
+            return ratingService;
+        }
+
 
         public IHttpActionResult Post(RatingCreate model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
+
+            var _service = CreateRatingService();
 
             if (!_service.CreateRating(model))
             {
@@ -33,8 +42,10 @@ namespace BookStore.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
+
+            var _service = CreateRatingService();
 
             if (!_service.UpdateRating(model))
             {
@@ -46,6 +57,8 @@ namespace BookStore.WebAPI.Controllers
 
         public IHttpActionResult Delete(int ratingId)
         {
+            var _service = CreateRatingService();
+
             if (!_service.DeleteRating(ratingId))
             {
                 return InternalServerError();
