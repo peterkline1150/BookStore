@@ -17,5 +17,11 @@ namespace BookStore.Models
 
         [Required]
         public double AuthorStyleScore { get; set; }
+
+        [MaxLength(200, ErrorMessage = "Be less verbose, please!")]
+        public string Description { get; set; }
+
+        public int BookId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

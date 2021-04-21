@@ -10,6 +10,13 @@ namespace BookStore.Services
 {
     public class RatingServices
     {
+        private readonly Guid _userId;
+
+        public RatingServices(Guid userId)
+        {
+            _userId = userId;
+        }
+
         public bool CreateRating(RatingCreate model)
         {
             var entity =
@@ -17,7 +24,10 @@ namespace BookStore.Services
                 {
                     EnjoymentScore = model.EnjoymentScore,
                     EngagementScore = model.EngagementScore,
-                    AuthorStyleScore = model.AuthorStyleScore
+                    AuthorStyleScore = model.AuthorStyleScore,
+                    Description = model.Description,
+                    BookId = model.BookId,
+                    UserId = _userId
                 };
 
             using (var ctx = new ApplicationDbContext())

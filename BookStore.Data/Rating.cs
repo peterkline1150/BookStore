@@ -32,11 +32,14 @@ namespace BookStore.Data
             }
         }
 
+        [MaxLength(200, ErrorMessage = "Be less verbose, please!")]
         public string Description { get; set; }
 
         public Guid UserId { get; set; }
 
         [ForeignKey(nameof(Book))]
         public int BookId { get; set; }
+
+        public Book Book { get; set; }
     }
 }
