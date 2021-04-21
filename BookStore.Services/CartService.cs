@@ -17,43 +17,37 @@ namespace BookStore.Services
             _buyerId = buyerId;
         }
 
-        public bool AddBookToCart(int bookIdToAdd)
+        public bool UpdateCart(int bookId, int enterAnyNumberToRemoveBook = 0)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                if (ctx.Cart.Count() == 0)
+                if (enterAnyNumberToRemoveBook == 0)
                 {
-                    var entity = new Cart()
+                    if (ctx.Cart.Count() == 0)
                     {
-                        BuyerId = _buyerId
-                    };
+                        var entity = new Cart()
+                        {
+                            BuyerId = _buyerId
+                        };
 
-                    ctx.Cart.Add(entity);
-                    ctx.SaveChanges();
+                        ctx.Cart.Add(entity);
+                        ctx.SaveChanges();
+                    }
+
+                    var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+                    var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
+                    cartUpdateEntity.BookList.Add(bookEntity);
+
+                    return ctx.SaveChanges() == 1;
                 }
+                else
+                {
+                    var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+                    var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
+                    cartUpdateEntity.BookList.Remove(bookEntity);
 
-                var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-                var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToAdd);
-                cartUpdateEntity.BookList.Add(bookEntity);
-
-                return ctx.SaveChanges() == 1;
-
-                //var singleCartUpdate = (CartUpdate) cartUpdateEntity;
-
-            }
-        }
-
-        public bool RemoveBookFromCart(int bookIdToRemove)
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-
-                var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-                var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToRemove);
-                cartUpdateEntity.BookList.Remove(bookEntity);
-
-                return ctx.SaveChanges() == 1;
-
+                    return ctx.SaveChanges() == 1;
+                }
             }
         }
 
