@@ -11,12 +11,20 @@ namespace BookStore.Data
     {
         [Key]
         public int CartId { get; set; }
-        [Required]
-        public double Tax { get; set; }
-        [Required]
-        public double TotalCost { get; set; }
-        public string BookList { get; set; }
-        [Required]
+        public double Tax { get 
+            {
+                return 0.07;
+            } }
+        public List<Book> BookList { get; set; } = new List<Book>();
+        public double TotalCost { get
+            {
+                double totalCost = 0;
+                foreach (var book in BookList)
+                {
+                    totalCost += book.Price;
+                }
+                return totalCost;
+            } }
         public Guid BuyerId { get; set; }
 
     }
