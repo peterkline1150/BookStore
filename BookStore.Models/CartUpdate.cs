@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace BookStore.Models
 {
     public class CartUpdate
     {
-        public double Tax { get; set; }
         public double TotalCost { get; set; }
-        public string BookList { get; set; }
+        public List<Book> BookList { get; set; } = new List<Book>();
+
     }
 }

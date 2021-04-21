@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,10 +10,8 @@ namespace BookStore.Models
 {
     public class CartDetail
     {
-        public int CartId { get; set; }
         public double Tax { get; set; }
         public double TotalCost { get; set; }
-        public string BookList { get; set; }
-        public Guid BuyerId { get; set; }
+        public List<string> TitlesOfBooksInCart { get; set; } = new List<string>();
     }
 }

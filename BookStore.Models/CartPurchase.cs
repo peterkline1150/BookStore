@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BookStore.Models
 
         public double Tax { get; set; }
         public double TotalCost { get; set; }
-        public string BookList { get; set; }
+        public List<Book> BookList { get; set; } = new List<Book>();
 
     }
 }
