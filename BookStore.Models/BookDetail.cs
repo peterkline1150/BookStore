@@ -13,11 +13,11 @@ namespace BookStore.Models
 
         public string Title { get; set; }
 
-        public Author Author { get; set; }
+        public string AuthorName { get; set; }
 
-        public Genre Genre { get; set; }
+        public string GenreName { get; set; }
 
-        public PublishingCompany PublishingCompany { get; set; }
+        public string PublishingCompanyName { get; set; }
 
         public DateTime Date { get; set; }
 
