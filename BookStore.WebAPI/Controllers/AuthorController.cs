@@ -18,7 +18,7 @@ namespace BookStore.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             if (!_service.CreateAuthor(model))
@@ -26,7 +26,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Author was added successfully!");
         }
 
         public IHttpActionResult Get()
@@ -57,7 +57,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Author was updated successfully!");
         }
 
         public IHttpActionResult Delete(int authorId)
@@ -67,7 +67,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Author removed.");
         }
     }
 }

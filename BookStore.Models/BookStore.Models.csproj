@@ -92,6 +92,7 @@
     <Compile Include="PublishingCompanyUpdate.cs" />
     <Compile Include="RatingCreate.cs" />
     <Compile Include="RatingDetail.cs" />
+    <Compile Include="RatingForListInBookDetail.cs" />
     <Compile Include="RatingList.cs" />
     <Compile Include="RatingUpdate.cs" />
   </ItemGroup>

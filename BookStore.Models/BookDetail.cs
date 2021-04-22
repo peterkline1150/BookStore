@@ -23,38 +23,14 @@ namespace BookStore.Models
 
         public int NumCopies { get; set; }
 
-        public bool IsAvailable
-        {
-            get
-            {
-                return NumCopies > 0;
-            }
-        }
+        public bool IsAvailable { get; set; }
 
         public double Price { get; set; }
 
-        public List<Rating> RatingsForBook { get; set; } = new List<Rating>();
+        public List<RatingForListInBookDetail> RatingsForBook { get; set; } = new List<RatingForListInBookDetail>();
 
-        public double AvRating
-        {
-            get
-            {
-                double totalRating = 0;
-                foreach (Rating rating in RatingsForBook)
-                {
-                    totalRating += rating.ScoreAverage;
-                }
+        public double AvRating { get; set; }
 
-                return RatingsForBook.Count > 0 ? Math.Round(totalRating / RatingsForBook.Count, 2) : 0;
-            }
-        }
-
-        public bool IsRecommended
-        {
-            get
-            {
-                return AvRating >= 4;
-            }
-        }
+        public bool IsRecommended { get; set; }
     }
 }

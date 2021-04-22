@@ -9,6 +9,8 @@ namespace BookStore.Models
 {
     public class PublishingCompanyUpdate
     {
+        public int PublishingCompanyId { get; set; }
+
         [MaxLength(100, ErrorMessage = "Company Name is too long")]
         public string PublishingCompanyName { get; set; }
 

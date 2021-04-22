@@ -50,14 +50,14 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("A publishing company does not exist with that ID");
         }
 
-        public IHttpActionResult Put(int companyId, PublishingCompanyUpdate model)
+        public IHttpActionResult Put(PublishingCompanyUpdate model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!_service.UpdatePublishingCompany(companyId, model))
+            if (!_service.UpdatePublishingCompany(model))
             {
                 return InternalServerError();
             }

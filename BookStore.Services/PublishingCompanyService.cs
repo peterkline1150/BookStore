@@ -47,20 +47,27 @@ namespace BookStore.Services
             {
                 var entity = ctx.PublishingCompanies.Include(e => e.BooksPublished).Single(e => e.PublishingCompanyId == companyId);
 
+                var booksByCompany = new List<string>();
+                foreach (var book in entity.BooksPublished)
+                {
+                    booksByCompany.Add(book.Title);
+                }
+
                 return new PublishingCompanyDetail()
                 {
                     PublishingCompanyId = entity.PublishingCompanyId,
                     PublishingCompanyName = entity.PublishingCompanyName,
-                    PublishingCompanyAddress = entity.PublishingCompanyAddress
+                    PublishingCompanyAddress = entity.PublishingCompanyAddress,
+                    BookTitlesByPublishingCompany = booksByCompany
                 };
             }
         }
 
-        public bool UpdatePublishingCompany(int companyId, PublishingCompanyUpdate model)
+        public bool UpdatePublishingCompany(PublishingCompanyUpdate model)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity = ctx.PublishingCompanies.Single(e => e.PublishingCompanyId == companyId);
+                var entity = ctx.PublishingCompanies.Single(e => e.PublishingCompanyId == model.PublishingCompanyId);
 
                 entity.PublishingCompanyName = model.PublishingCompanyName;
                 entity.PublishingCompanyAddress = model.PublishingCompanyAddress;

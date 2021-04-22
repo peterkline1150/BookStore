@@ -13,5 +13,7 @@ namespace BookStore.Models
         public string PublishingCompanyName { get; set; }
 
         public string PublishingCompanyAddress { get; set; }
+
+        public List<string> BookTitlesByPublishingCompany { get; set; } = new List<string>();
     }
 }

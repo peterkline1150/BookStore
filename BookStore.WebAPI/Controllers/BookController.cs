@@ -58,14 +58,14 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("That ID does not exist.");
         }
 
-        public IHttpActionResult Put(int bookId, BookUpdate model)
+        public IHttpActionResult Put(BookUpdate model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!_service.UpdateBook(bookId, model))
+            if (!_service.UpdateBook(model))
             {
                 return InternalServerError();
             }
