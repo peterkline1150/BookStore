@@ -9,13 +9,13 @@ namespace BookStore.Models
 {
     public class RatingCreate
     {
-        [Required]
+        [Required, Range(0, 5)]
         public double EnjoymentScore { get; set; }
 
-        [Required]
+        [Required, Range(0, 5)]
         public double EngagementScore { get; set; }
 
-        [Required]
+        [Required, Range(0, 5)]
         public double AuthorStyleScore { get; set; }
 
         [MaxLength(200, ErrorMessage = "Be less verbose, please!")]

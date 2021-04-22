@@ -80,6 +80,16 @@ namespace BookStore.Services
                 var entity = ctx.Books.Include(e => e.Author).Include(e => e.PublishingCompany).Include(e => e.Genre).Include(e => e.RatingsForBook)
                     .Single(e => e.BookId == bookId);
 
+                var listOfRatings = new List<RatingForListInBookDetail>();
+                foreach (var rating in entity.RatingsForBook)
+                {
+                    listOfRatings.Add(new RatingForListInBookDetail()
+                    {
+                        ScoreAverage = rating.ScoreAverage,
+                        Description = rating.Description,
+                        UserId = rating.UserId
+                    });
+                }
                 return new BookDetail()
                 {
                     BookId = entity.BookId,
@@ -89,17 +99,20 @@ namespace BookStore.Services
                     PublishingCompanyName = entity.PublishingCompany.PublishingCompanyName,
                     Date = entity.Date,
                     NumCopies = entity.NumCopies,
+                    IsAvailable = entity.IsAvailable,
                     Price = entity.Price,
-                    RatingsForBook = entity.RatingsForBook
+                    AvRating = entity.AvRating,
+                    IsRecommended = entity.IsRecommended,
+                    RatingsForBook = listOfRatings
                 };
             }
         }
 
-        public bool UpdateBook(int bookId, BookUpdate model)
+        public bool UpdateBook(BookUpdate model)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity = ctx.Books.Find(bookId);
+                var entity = ctx.Books.Find(model.BookId);
 
                 int authorId = entity.AuthorId;
                 int genreId = entity.GenreId;

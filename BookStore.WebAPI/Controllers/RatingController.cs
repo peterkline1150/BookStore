@@ -35,7 +35,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Rating created successfully!");
         }
 
         public IHttpActionResult Put(RatingUpdate model)
@@ -52,7 +52,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Rating updated.");
         }
 
         public IHttpActionResult Delete(int ratingId)
@@ -64,7 +64,7 @@ namespace BookStore.WebAPI.Controllers
                 return InternalServerError();
             }
 
-            return Ok();
+            return Ok("Rating removed.");
         }
     }
 }

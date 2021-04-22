@@ -25,7 +25,7 @@ namespace BookStore.WebAPI.Controllers
             {
                 return InternalServerError();
             }
-            return Ok();
+            return Ok("Genre created successfully!");
         }
 
         public IHttpActionResult Get()
@@ -55,7 +55,7 @@ namespace BookStore.WebAPI.Controllers
             {
                 return InternalServerError();
             }
-            return Ok();
+            return Ok("Genre updated successfully! :^)");
         }
 
         public IHttpActionResult Delete(int genreId)
@@ -64,7 +64,7 @@ namespace BookStore.WebAPI.Controllers
             {
                 return InternalServerError();
             }
-            return Ok();
+            return Ok("Genre removed.");
         }
 
 

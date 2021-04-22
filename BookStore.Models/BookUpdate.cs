@@ -9,6 +9,8 @@ namespace BookStore.Models
 {
     public class BookUpdate
     {
+        public int BookId { get; set; }
+
         [MaxLength(100, ErrorMessage = "Title is too long")]
         public string Title { get; set; }
         public int AuthorId { get; set; }
