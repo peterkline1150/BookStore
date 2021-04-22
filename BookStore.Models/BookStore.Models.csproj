@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="BookCreate.cs" />
     <Compile Include="BookDetail.cs" />
+    <Compile Include="BookItemInCart.cs" />
     <Compile Include="BookList.cs" />
     <Compile Include="BookUpdate.cs" />
     <Compile Include="AuthorCreate.cs" />

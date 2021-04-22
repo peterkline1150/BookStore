@@ -13,7 +13,7 @@ namespace BookStore.Data
         public int CartId { get; set; }
         public double Tax { get 
             {
-                return 0.07;
+                return 1.07;
             } }
         public List<Book> BookList { get; set; } = new List<Book>();
         public double TotalCost { get
@@ -21,9 +21,9 @@ namespace BookStore.Data
                 double totalCost = 0;
                 foreach (var book in BookList)
                 {
-                    totalCost += book.Price;
+                    totalCost += (book.NumCopiesInCart * book.Price);
                 }
-                return totalCost * Tax;
+                return Math.Round(totalCost * Tax, 2);
             } }
         public Guid BuyerId { get; set; }
 

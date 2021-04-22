@@ -22,7 +22,9 @@ namespace BookStore.Services
                 Date = model.Date,
                 NumCopies = model.NumCopies,
                 Price = model.Price,
-                CartId = null
+                CartId = null,
+                Cart = null,
+                NumCopiesInCart = 0
             };
 
             using (var ctx = new ApplicationDbContext())
