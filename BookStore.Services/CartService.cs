@@ -17,39 +17,78 @@ namespace BookStore.Services
             _buyerId = buyerId;
         }
 
-        public bool UpdateCart(int bookId, int enter0ToAddToCart1ToRemove)
+        //public bool UpdateCart(int bookId, int enter0ToAddToCart1ToRemove)
+        //{
+        //    using (var ctx = new ApplicationDbContext())
+        //    {
+        //        if (enter0ToAddToCart1ToRemove == 0)
+        //        {
+        //            if (ctx.Cart.Count() == 0)
+        //            {
+        //                var entity = new Cart()
+        //                {
+        //                    BuyerId = _buyerId
+        //                };
+
+        //                ctx.Cart.Add(entity);
+        //                ctx.SaveChanges();
+        //            }
+
+        //            var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+        //            var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
+        //            cartUpdateEntity.BookList.Add(bookEntity);
+
+        //            bookEntity.CartId = cartUpdateEntity.CartId;
+
+        //            return ctx.SaveChanges() == 1;
+        //        }
+        //        else
+        //        {
+        //            var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+        //            var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
+        //            cartUpdateEntity.BookList.Remove(bookEntity);
+
+        //            return ctx.SaveChanges() == 1;
+        //        }
+        //    }
+        //}
+
+        public bool AddBookToCart(int bookIdToAdd)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                if (enter0ToAddToCart1ToRemove == 0)
+                if (ctx.Cart.Count() == 0)
                 {
-                    if (ctx.Cart.Count() == 0)
+                    var entity = new Cart()
                     {
-                        var entity = new Cart()
-                        {
-                            BuyerId = _buyerId
-                        };
+                        BuyerId = _buyerId
+                    };
 
-                        ctx.Cart.Add(entity);
-                        ctx.SaveChanges();
-                    }
-
-                    var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-                    var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
-                    cartUpdateEntity.BookList.Add(bookEntity);
-
-                    bookEntity.CartId = cartUpdateEntity.CartId;
-
-                    return ctx.SaveChanges() == 1;
+                    ctx.Cart.Add(entity);
+                    ctx.SaveChanges();
                 }
-                else
-                {
-                    var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-                    var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
-                    cartUpdateEntity.BookList.Remove(bookEntity);
 
-                    return ctx.SaveChanges() == 1;
-                }
+                var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+                var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToAdd);
+                cartUpdateEntity.BookList.Add(bookEntity);
+
+                bookEntity.CartId = cartUpdateEntity.CartId;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool RemoveBookFromCart(int bookIdToRemove)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+
+                var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToRemove);
+                bookEntity.CartId = null;
+                cartUpdateEntity.BookList.Remove(bookEntity);
+
+                return ctx.SaveChanges() == 1;
             }
         }
 
@@ -81,7 +120,7 @@ namespace BookStore.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var cartEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+                var cartEntity = ctx.Cart.Include(e => e.BookList).Single(e => e.BuyerId == _buyerId);
                 double totalCost = cartEntity.TotalCost;
 
                 foreach (var book in cartEntity.BookList)
