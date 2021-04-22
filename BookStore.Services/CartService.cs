@@ -53,7 +53,7 @@ namespace BookStore.Services
         //    }
         //}
 
-        public bool AddBookToCart(int bookIdToAdd)
+        public bool AddBookToCart(int bookIdToAdd, int numberOfCopiesToAdd)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -70,25 +70,66 @@ namespace BookStore.Services
 
                 var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
                 var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToAdd);
+
+                if (!bookEntity.IsAvailable || bookEntity.NumCopies < numberOfCopiesToAdd)
+                {
+                    return false;
+                }
+
+                int bookIdToAddTo = 0;
+                foreach (var book in cartUpdateEntity.BookList)
+                {
+                    if (book.BookId == bookIdToAdd)
+                    {
+                        bookIdToAddTo = book.BookId;
+                    }
+                }
+
+                if (bookIdToAddTo != 0)
+                {
+                    var book = cartUpdateEntity.BookList.Single(e => e.BookId == bookIdToAdd);
+                    book.NumCopies -= numberOfCopiesToAdd;
+                    book.NumCopiesInCart += numberOfCopiesToAdd;
+
+                    return ctx.SaveChanges() == 1;
+                }
+
                 cartUpdateEntity.BookList.Add(bookEntity);
 
                 bookEntity.CartId = cartUpdateEntity.CartId;
+                bookEntity.NumCopiesInCart += numberOfCopiesToAdd;
+                bookEntity.NumCopies -= numberOfCopiesToAdd;
 
                 return ctx.SaveChanges() == 1;
             }
         }
 
-        public bool RemoveBookFromCart(int bookIdToRemove)
+        public bool RemoveBookFromCart(int bookIdToRemove, int numberOfCopiesToRemove)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
 
                 var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToRemove);
-                bookEntity.CartId = null;
-                cartUpdateEntity.BookList.Remove(bookEntity);
 
-                return ctx.SaveChanges() == 1;
+                if (bookEntity.NumCopiesInCart > numberOfCopiesToRemove)
+                {
+                    bookEntity.NumCopiesInCart -= numberOfCopiesToRemove;
+                    bookEntity.NumCopies += numberOfCopiesToRemove;
+
+                    return ctx.SaveChanges() == 1;
+                }
+                else if (bookEntity.NumCopiesInCart == numberOfCopiesToRemove)
+                {
+                    bookEntity.CartId = null;
+                    bookEntity.NumCopies += numberOfCopiesToRemove;
+                    bookEntity.NumCopiesInCart = 0;
+                    cartUpdateEntity.BookList.Remove(bookEntity);
+
+                    return ctx.SaveChanges() == 1;
+                }
+
+                return false;
             }
         }
 
@@ -100,15 +141,19 @@ namespace BookStore.Services
                 var cartEntity = ctx.Cart.Include(e => e.BookList)
                     .Single(e => e.BuyerId == _buyerId);
 
-                var listOfBookTitles = new List<string>();
+                var listOfBooks = new List<BookItemInCart>();
                 foreach (var book in cartEntity.BookList)
                 {
-                    listOfBookTitles.Add(book.Title);
+                    listOfBooks.Add(new BookItemInCart()
+                    {
+                        Title = book.Title,
+                        NumCopiesInCart = book.NumCopiesInCart
+                    });
                 }
 
                 return new CartDetail()
                 {
-                    TitlesOfBooksInCart = listOfBookTitles,
+                    TitlesAndNumCopiesOfBooksInCart = listOfBooks,
                     Tax = cartEntity.Tax,
                     TotalCost = cartEntity.TotalCost
                 };

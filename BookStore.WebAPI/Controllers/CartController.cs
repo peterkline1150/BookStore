@@ -19,11 +19,11 @@ namespace BookStore.WebAPI.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult AddBookToCart(int bookIdToAdd)
+        public IHttpActionResult AddBookToCart(int bookIdToAdd, int numberOfCopiesToAdd)
         {
             var _service = CreateCartService();
 
-            if (!_service.AddBookToCart(bookIdToAdd))
+            if (!_service.AddBookToCart(bookIdToAdd, numberOfCopiesToAdd))
             {
                 return InternalServerError();
             }
@@ -32,11 +32,11 @@ namespace BookStore.WebAPI.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult RemoveBookFromCart(int bookIdToRemove)
+        public IHttpActionResult RemoveBookFromCart(int bookIdToRemove, int numberOfCopiesToRemove)
         {
             var _service = CreateCartService();
 
-            if (!_service.RemoveBookFromCart(bookIdToRemove))
+            if (!_service.RemoveBookFromCart(bookIdToRemove, numberOfCopiesToRemove))
             {
                 return InternalServerError();
             }
