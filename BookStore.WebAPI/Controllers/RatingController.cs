@@ -13,10 +13,10 @@ namespace BookStore.WebAPI.Controllers
     [Authorize]
     public class RatingController : ApiController
     {
-        private RatingServices CreateRatingService()
+        private RatingService CreateRatingService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var ratingService = new RatingServices(userId);
+            var ratingService = new RatingService(userId);
             return ratingService;
         }
 
