@@ -18,16 +18,30 @@ namespace BookStore.WebAPI.Controllers
             return cartService;
         }
 
-        public IHttpActionResult Put(int bookIdToAddOrRemove, int enter0ToAddToCart1ToRemove)
+        [HttpPut]
+        public IHttpActionResult AddBookToCart(int bookIdToAdd)
         {
             var _service = CreateCartService();
 
-            if (!_service.UpdateCart(bookIdToAddOrRemove, enter0ToAddToCart1ToRemove))
+            if (!_service.AddBookToCart(bookIdToAdd))
             {
                 return InternalServerError();
             }
 
-            return Ok("Book was successfully added to your cart");
+            return Ok("Book was successfully added to your cart.");
+        }
+
+        [HttpPut]
+        public IHttpActionResult RemoveBookFromCart(int bookIdToRemove)
+        {
+            var _service = CreateCartService();
+
+            if (!_service.RemoveBookFromCart(bookIdToRemove))
+            {
+                return InternalServerError();
+            }
+
+            return Ok("Book was successfully removed from your cart.");
         }
 
         public IHttpActionResult Get()
