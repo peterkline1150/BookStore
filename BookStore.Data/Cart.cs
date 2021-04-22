@@ -23,7 +23,7 @@ namespace BookStore.Data
                 {
                     totalCost += book.Price;
                 }
-                return totalCost;
+                return totalCost * Tax;
             } }
         public Guid BuyerId { get; set; }
 

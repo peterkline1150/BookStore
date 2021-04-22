@@ -38,6 +38,8 @@ namespace BookStore.Services
                     var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
                     cartUpdateEntity.BookList.Add(bookEntity);
 
+                    bookEntity.CartId = cartUpdateEntity.CartId;
+
                     return ctx.SaveChanges() == 1;
                 }
                 else
@@ -81,6 +83,11 @@ namespace BookStore.Services
             {
                 var cartEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
                 double totalCost = cartEntity.TotalCost;
+
+                foreach (var book in cartEntity.BookList)
+                {
+                    book.CartId = null;
+                }
 
                 ctx.Cart.Remove(cartEntity);
                 ctx.SaveChanges();
