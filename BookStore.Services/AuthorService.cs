@@ -9,7 +9,7 @@ using System.Data.Entity;
 
 namespace BookStore.Services
 {
-    public class AuthorServices
+    public class AuthorService
     {
 
         public bool CreateAuthor(AuthorCreate model)
