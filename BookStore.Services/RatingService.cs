@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BookStore.Services
 {
-    public class RatingServices
+    public class RatingService
     {
         private readonly Guid _userId;
 
-        public RatingServices(Guid userId)
+        public RatingService(Guid userId)
         {
             _userId = userId;
         }
