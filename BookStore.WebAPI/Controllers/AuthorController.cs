@@ -12,7 +12,7 @@ namespace BookStore.WebAPI.Controllers
     [Authorize]
     public class AuthorController : ApiController
     {
-        private readonly AuthorServices _service = new AuthorServices();
+        private readonly AuthorService _service = new AuthorService();
 
         public IHttpActionResult Post(AuthorCreate model)
         {
