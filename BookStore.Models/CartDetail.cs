@@ -12,6 +12,6 @@ namespace BookStore.Models
     {
         public double Tax { get; set; }
         public double TotalCost { get; set; }
-        public List<string> TitlesOfBooksInCart { get; set; } = new List<string>();
+        public List<BookItemInCart> TitlesAndNumCopiesOfBooksInCart { get; set; } = new List<BookItemInCart>();
     }
 }

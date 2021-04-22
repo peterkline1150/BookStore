@@ -21,7 +21,7 @@ namespace BookStore.Data
                 double totalCost = 0;
                 foreach (var book in BookList)
                 {
-                    totalCost += book.Price;
+                    totalCost += (book.NumCopiesInCart * book.Price);
                 }
                 return Math.Round(totalCost * Tax, 2);
             } }
