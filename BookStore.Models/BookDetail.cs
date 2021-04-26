@@ -19,13 +19,13 @@ namespace BookStore.Models
 
         public string PublishingCompanyName { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public int NumCopies { get; set; }
 
         public bool IsAvailable { get; set; }
 
-        public double Price { get; set; }
+        public string Price { get; set; }
 
         public List<RatingForListInBookDetail> RatingsForBook { get; set; } = new List<RatingForListInBookDetail>();
 

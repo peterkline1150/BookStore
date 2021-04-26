@@ -14,6 +14,7 @@ namespace BookStore.WebAPI.Controllers
     {
         private readonly PublishingCompanyService _service = new PublishingCompanyService();
 
+        [Authorize]
         public IHttpActionResult Post(PublishingCompanyCreate model)
         {
             if (!ModelState.IsValid)
@@ -64,6 +65,7 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("A publishing company does not exist with that Name");
         }
 
+        [Authorize]
         public IHttpActionResult Put(PublishingCompanyUpdate model)
         {
             if (!ModelState.IsValid)
@@ -79,6 +81,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Publishing company updated successfully!");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int companyId)
         {
             if (!_service.DeletePublishingCompany(companyId))

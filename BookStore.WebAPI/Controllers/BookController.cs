@@ -9,11 +9,11 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
-    [Authorize]
     public class BookController : ApiController
     {
         private readonly BookService _service = new BookService();
 
+        [Authorize]
         public IHttpActionResult Post(BookCreate model)
         {
             if (!ModelState.IsValid)
@@ -40,6 +40,11 @@ namespace BookStore.WebAPI.Controllers
 
         public IHttpActionResult Get(DateTime startDate, DateTime endDate)
         {
+            if (startDate > endDate)
+            {
+                return BadRequest("Start date must be earlier than end date.");
+            }
+
             var books = _service.GetBooksByDate(startDate, endDate);
             var booksOrdered = books.OrderBy(x => x.Date);
 
@@ -72,6 +77,7 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("That Name does not exist.");
         }
 
+        [Authorize]
         public IHttpActionResult Put(BookUpdate model)
         {
             if (!ModelState.IsValid)
@@ -87,6 +93,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Book was updated successfully!");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int bookId)
         {
             if (!_service.DeleteBook(bookId))
