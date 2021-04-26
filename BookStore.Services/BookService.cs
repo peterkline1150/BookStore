@@ -111,6 +111,41 @@ namespace BookStore.Services
             }
         }
 
+        public BookDetail GetBookByName(string bookName)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Books.Include(e => e.Author).Include(e => e.PublishingCompany).Include(e => e.Genre).Include(e => e.RatingsForBook)
+                    .Single(e => e.Title == bookName);
+
+                var listOfRatings = new List<RatingForListInBookDetail>();
+                foreach (var rating in entity.RatingsForBook)
+                {
+                    listOfRatings.Add(new RatingForListInBookDetail()
+                    {
+                        ScoreAverage = rating.ScoreAverage,
+                        Description = rating.Description,
+                        UserId = rating.UserId
+                    });
+                }
+                return new BookDetail()
+                {
+                    BookId = entity.BookId,
+                    Title = entity.Title,
+                    AuthorName = entity.Author.AuthorName,
+                    GenreName = entity.Genre.GenreName,
+                    PublishingCompanyName = entity.PublishingCompany.PublishingCompanyName,
+                    Date = entity.Date,
+                    NumCopies = entity.NumCopies,
+                    IsAvailable = entity.IsAvailable,
+                    Price = entity.Price,
+                    AvRating = entity.AvRating,
+                    IsRecommended = entity.IsRecommended,
+                    RatingsForBook = listOfRatings
+                };
+            }
+        }
+
         public bool UpdateBook(BookUpdate model)
         {
             using (var ctx = new ApplicationDbContext())

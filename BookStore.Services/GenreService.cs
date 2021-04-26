@@ -60,6 +60,28 @@ namespace BookStore.Services
             }
         }
 
+        public GenreDetail GetGenreByGenreName(string genreName)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Genres.Include(e => e.BooksInGenre).Single(e => genreName == e.GenreName);
+
+                var titlesOfBooksInGenre = new List<string>();
+
+                foreach (var book in entity.BooksInGenre)
+                {
+                    titlesOfBooksInGenre.Add(book.Title);
+                }
+
+                return new GenreDetail()
+                {
+                    GenreId = entity.GenreId,
+                    GenreName = entity.GenreName,
+                    BooksTitlesInGenre = titlesOfBooksInGenre
+                };
+            }
+        }
+
         public bool UpdateGenre(GenreUpdate model)
         {
             using (var ctx = new ApplicationDbContext())
