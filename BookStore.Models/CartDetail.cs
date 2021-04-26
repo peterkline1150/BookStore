@@ -10,8 +10,8 @@ namespace BookStore.Models
 {
     public class CartDetail
     {
-        public double Tax { get; set; }
-        public double TotalCost { get; set; }
+        public string Tax { get; set; }
+        public string TotalCost { get; set; }
         public List<BookItemInCart> TitlesAndNumCopiesOfBooksInCart { get; set; } = new List<BookItemInCart>();
     }
 }

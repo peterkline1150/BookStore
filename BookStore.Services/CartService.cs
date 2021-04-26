@@ -17,42 +17,6 @@ namespace BookStore.Services
             _buyerId = buyerId;
         }
 
-        //public bool UpdateCart(int bookId, int enter0ToAddToCart1ToRemove)
-        //{
-        //    using (var ctx = new ApplicationDbContext())
-        //    {
-        //        if (enter0ToAddToCart1ToRemove == 0)
-        //        {
-        //            if (ctx.Cart.Count() == 0)
-        //            {
-        //                var entity = new Cart()
-        //                {
-        //                    BuyerId = _buyerId
-        //                };
-
-        //                ctx.Cart.Add(entity);
-        //                ctx.SaveChanges();
-        //            }
-
-        //            var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-        //            var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
-        //            cartUpdateEntity.BookList.Add(bookEntity);
-
-        //            bookEntity.CartId = cartUpdateEntity.CartId;
-
-        //            return ctx.SaveChanges() == 1;
-        //        }
-        //        else
-        //        {
-        //            var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
-        //            var bookEntity = ctx.Books.Single(e => e.BookId == bookId);
-        //            cartUpdateEntity.BookList.Remove(bookEntity);
-
-        //            return ctx.SaveChanges() == 1;
-        //        }
-        //    }
-        //}
-
         public bool AddBookToCart(int bookIdToAdd, int numberOfCopiesToAdd)
         {
             using (var ctx = new ApplicationDbContext())
@@ -185,8 +149,8 @@ namespace BookStore.Services
                 return new CartDetail()
                 {
                     TitlesAndNumCopiesOfBooksInCart = listOfBooks,
-                    Tax = cartEntity.Tax,
-                    TotalCost = cartEntity.TotalCost
+                    Tax = "7%",
+                    TotalCost = cartEntity.TotalCost.ToString("$0.00")
                 };
             }
         }

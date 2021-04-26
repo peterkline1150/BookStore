@@ -60,7 +60,7 @@ namespace BookStore.Services
                 {
                     AuthorId = entity.AuthorId,
                     AuthorName = entity.AuthorName,
-                    Birthdate = entity.Birthdate,
+                    Birthdate = entity.Birthdate.ToShortDateString(),
                     NamesOfBooksByAuthor = namesOfBooks
                 };
             }
@@ -83,7 +83,7 @@ namespace BookStore.Services
                 {
                     AuthorId = entity.AuthorId,
                     AuthorName = entity.AuthorName,
-                    Birthdate = entity.Birthdate,
+                    Birthdate = entity.Birthdate.ToShortDateString(),
                     NamesOfBooksByAuthor = namesOfBooks
                 };
             }

@@ -9,11 +9,11 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
-    [Authorize]
     public class AuthorController : ApiController
     {
         private readonly AuthorService _service = new AuthorService();
 
+        [Authorize]
         public IHttpActionResult Post(AuthorCreate model)
         {
             if (!ModelState.IsValid)
@@ -54,6 +54,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok(author);
         }
 
+        [Authorize]
         public IHttpActionResult Put(AuthorUpdate model)
         {
             if (!ModelState.IsValid)
@@ -69,6 +70,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Author was updated successfully!");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int authorId)
         {
             if (!_service.DeleteAuthor(authorId))

@@ -15,6 +15,7 @@ namespace BookStore.WebAPI.Controllers
         private readonly GenreService _service = new GenreService();
 
 
+        [Authorize]
         public IHttpActionResult Post(GenreCreate model)
         {
             if (!ModelState.IsValid)
@@ -56,6 +57,7 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("That Name does not exist.");
         }
 
+        [Authorize]
         public IHttpActionResult Put(GenreUpdate model)
         {
             if (!ModelState.IsValid)
@@ -70,6 +72,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Genre updated successfully! :^)");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int genreId)
         {
             if (!_service.DeleteGenre(genreId))
