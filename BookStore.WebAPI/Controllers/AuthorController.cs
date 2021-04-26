@@ -38,9 +38,18 @@ namespace BookStore.WebAPI.Controllers
             return Ok(authorsAlphabetizedByName);
         }
 
+        [HttpGet]
         public IHttpActionResult Get(int authorId)
         {
             var author = _service.GetAuthorByAuthorId(authorId);
+
+            return Ok(author);
+        }
+
+        [HttpGet]
+        public IHttpActionResult Get(string authorName)
+        {
+            var author = _service.GetAuthorByAuthorName(authorName);
 
             return Ok(author);
         }

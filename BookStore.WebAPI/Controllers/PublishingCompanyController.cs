@@ -38,6 +38,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok(companiesOrderedByName);
         }
 
+        [HttpGet]
         public IHttpActionResult Get(int companyId)
         {
             var company = _service.GetPublishingCompanyById(companyId);
@@ -48,6 +49,19 @@ namespace BookStore.WebAPI.Controllers
             }
 
             return BadRequest("A publishing company does not exist with that ID");
+        }
+
+        [HttpGet]
+        public IHttpActionResult Get(string companyName)
+        {
+            var company = _service.GetPublishingCompanyByName(companyName);
+
+            if (company != null)
+            {
+                return Ok(company);
+            }
+
+            return BadRequest("A publishing company does not exist with that Name");
         }
 
         public IHttpActionResult Put(PublishingCompanyUpdate model)

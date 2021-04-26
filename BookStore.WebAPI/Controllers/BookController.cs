@@ -46,6 +46,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok(booksOrdered);
         }
 
+        [HttpGet]
         public IHttpActionResult Get(int bookId)
         {
             var book = _service.GetBookById(bookId);
@@ -56,6 +57,19 @@ namespace BookStore.WebAPI.Controllers
             }
 
             return BadRequest("That ID does not exist.");
+        }
+
+        [HttpGet]
+        public IHttpActionResult Get(string bookName)
+        {
+            var book = _service.GetBookByName(bookName);
+
+            if (book != null)
+            {
+                return Ok(book);
+            }
+
+            return BadRequest("That Name does not exist.");
         }
 
         public IHttpActionResult Put(BookUpdate model)
