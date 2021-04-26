@@ -71,7 +71,5 @@ namespace BookStore.Data
                 return AvRating >= 4;
             }
         }
-
-        public int NumCopiesInCart { get; set; }
     }
 }
