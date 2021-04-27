@@ -9,7 +9,6 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
-    [Authorize]
     public class PublishingCompanyController : ApiController
     {
         private readonly PublishingCompanyService _service = new PublishingCompanyService();
