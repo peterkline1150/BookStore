@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
+    [Authorize]
     public class CartController : ApiController
     {
         private CartService CreateCartService()

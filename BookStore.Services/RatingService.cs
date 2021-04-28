@@ -26,7 +26,8 @@ namespace BookStore.Services
                     EngagementScore = model.EngagementScore,
                     AuthorStyleScore = model.AuthorStyleScore,
                     Description = model.Description,
-                    BookId = model.BookId
+                    BookId = model.BookId,
+                    UserId = _userId
                 };
 
             using (var ctx = new ApplicationDbContext())
