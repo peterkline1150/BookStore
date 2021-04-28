@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Data
 {
+    // This data is for individual instances of specific books in individual peoples' carts. This data will not have any models or a service associated with it,
+    //    as this data is automatically created when the user adds a specific book to their cart, and it is automatically deleted when the user either removes
+    //    a book completely from their cart or they checkout and purchase the books in their cart.
     public class BooksInIndividualCarts
     {
         [Key]
