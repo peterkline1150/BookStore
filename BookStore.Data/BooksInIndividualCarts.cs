@@ -16,10 +16,17 @@ namespace BookStore.Data
         [Key]
         public int Id { get; set; }
 
+        public string Title { get; set; }
+
         public int NumberOfThisBookInCart { get; set; }
 
         public int BookId { get; set; }
 
         public Guid UserId { get; set; }
+
+        [ForeignKey(nameof(Cart))]
+        public int CartId { get; set; }
+
+        public Cart Cart { get; set; }
     }
 }

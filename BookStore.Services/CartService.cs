@@ -61,17 +61,18 @@ namespace BookStore.Services
 
                 if (bookIdToAddTo == 0)
                 {
-                    cartUpdateEntity.BookList.Add(bookEntity);
                     var bookInCart = new BooksInIndividualCarts()
                     {
                         BookId = bookEntity.BookId,
+                        Title = bookEntity.Title,
                         NumberOfThisBookInCart = numberOfCopiesToAdd,
                         UserId = _buyerId
                     };
-
+                    cartUpdateEntity.BookList.Add(bookInCart);
                     ctx.BooksInCart.Add(bookInCart);
 
-                    bookEntity.CartId = cartUpdateEntity.CartId;
+                    bookInCart.CartId = cartUpdateEntity.CartId;
+
                     bookEntity.NumCopies -= numberOfCopiesToAdd;
 
                     cartUpdateEntity.Cost += bookEntity.Price * bookInCart.NumberOfThisBookInCart;
@@ -80,7 +81,7 @@ namespace BookStore.Services
                 }
                 else
                 {
-                    var book = cartUpdateEntity.BookList.Single(e => e.BookId == bookIdToAdd);
+                    var book = ctx.Books.Single(e => e.BookId == bookIdToAdd);
                     var bookInCart = ctx.BooksInCart.Single(e => e.BookId == book.BookId && e.UserId == _buyerId);
 
                     book.NumCopies -= numberOfCopiesToAdd;
@@ -113,10 +114,9 @@ namespace BookStore.Services
                 }
                 else if (bookInCartEntity.NumberOfThisBookInCart == numberOfCopiesToRemove)
                 {
-                    bookEntity.CartId = null;
                     bookEntity.NumCopies += numberOfCopiesToRemove;
                     ctx.BooksInCart.Remove(bookInCartEntity);
-                    cartUpdateEntity.BookList.Remove(bookEntity);
+                    cartUpdateEntity.BookList.Remove(bookInCartEntity);
 
                     cartUpdateEntity.Cost -= bookEntity.Price * numberOfCopiesToRemove;
 
@@ -136,12 +136,11 @@ namespace BookStore.Services
                     .Single(e => e.BuyerId == _buyerId);
 
                 var listOfBooks = new List<BookItemInCart>();
-                foreach (var book in cartEntity.BookList)
+                foreach (var bookInCart in cartEntity.BookList)
                 {
-                    var bookInCart = ctx.BooksInCart.Single(e => e.BookId == book.BookId && e.UserId == _buyerId);
                     listOfBooks.Add(new BookItemInCart()
                     {
-                        Title = book.Title,
+                        Title = bookInCart.Title,
                         NumCopiesInCart = bookInCart.NumberOfThisBookInCart
                     });
                 }
@@ -164,12 +163,10 @@ namespace BookStore.Services
                 double totalCost = cartEntity.TotalCost;
 
                 var booksToRemove = new List<BooksInIndividualCarts>();
-                foreach (var book in cartEntity.BookList)
+                foreach (var bookInCart in cartEntity.BookList)
                 {
-                    var bookInCartToRemove = ctx.BooksInCart.Single(e => e.BookId == book.BookId && e.UserId == cartEntity.BuyerId);
+                    var bookInCartToRemove = ctx.BooksInCart.Single(e => e.BookId == bookInCart.BookId && e.UserId == cartEntity.BuyerId);
                     booksToRemove.Add(bookInCartToRemove);
-
-                    book.CartId = null;
                 }
 
                 foreach (var bookInCart in booksToRemove)

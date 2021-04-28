@@ -21,9 +21,7 @@ namespace BookStore.Services
                 CompanyId = model.CompanyId,
                 Date = model.Date,
                 NumCopies = model.NumCopies,
-                Price = model.Price,
-                CartId = null,
-                Cart = null
+                Price = model.Price
             };
 
             using (var ctx = new ApplicationDbContext())

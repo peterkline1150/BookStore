@@ -15,7 +15,7 @@ namespace BookStore.Data
             {
                 return 1.07;
             } }
-        public List<Book> BookList { get; set; } = new List<Book>();
+        public List<BooksInIndividualCarts> BookList { get; set; } = new List<BooksInIndividualCarts>();
         public double Cost { get; set; }
         public double TotalCost { get
             {
