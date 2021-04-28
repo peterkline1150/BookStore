@@ -17,11 +17,6 @@ namespace BookStore.Data
         [MaxLength(100, ErrorMessage = "Title is too long")]
         public string Title { get; set; }
 
-        [ForeignKey(nameof(Cart))]
-        public int? CartId { get; set; }
-
-        public Cart Cart { get; set; }
-
         [ForeignKey(nameof(Author))]
         public int AuthorId { get; set; }
 
@@ -71,7 +66,5 @@ namespace BookStore.Data
                 return AvRating >= 4;
             }
         }
-
-        public int NumCopiesInCart { get; set; }
     }
 }

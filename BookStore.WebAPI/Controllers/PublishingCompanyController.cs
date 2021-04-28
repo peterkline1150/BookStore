@@ -9,11 +9,11 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
-    [Authorize]
     public class PublishingCompanyController : ApiController
     {
         private readonly PublishingCompanyService _service = new PublishingCompanyService();
 
+        [Authorize]
         public IHttpActionResult Post(PublishingCompanyCreate model)
         {
             if (!ModelState.IsValid)
@@ -38,6 +38,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok(companiesOrderedByName);
         }
 
+        [HttpGet]
         public IHttpActionResult Get(int companyId)
         {
             var company = _service.GetPublishingCompanyById(companyId);
@@ -50,6 +51,20 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("A publishing company does not exist with that ID");
         }
 
+        [HttpGet]
+        public IHttpActionResult Get(string companyName)
+        {
+            var company = _service.GetPublishingCompanyByName(companyName);
+
+            if (company != null)
+            {
+                return Ok(company);
+            }
+
+            return BadRequest("A publishing company does not exist with that Name");
+        }
+
+        [Authorize]
         public IHttpActionResult Put(PublishingCompanyUpdate model)
         {
             if (!ModelState.IsValid)
@@ -65,6 +80,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Publishing company updated successfully!");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int companyId)
         {
             if (!_service.DeletePublishingCompany(companyId))

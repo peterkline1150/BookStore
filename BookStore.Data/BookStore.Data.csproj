@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
+    <Compile Include="BooksInIndividualCarts.cs" />
     <Compile Include="Cart.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="IdentityModels.cs" />

@@ -60,7 +60,30 @@ namespace BookStore.Services
                 {
                     AuthorId = entity.AuthorId,
                     AuthorName = entity.AuthorName,
-                    Birthdate = entity.Birthdate,
+                    Birthdate = entity.Birthdate.ToShortDateString(),
+                    NamesOfBooksByAuthor = namesOfBooks
+                };
+            }
+        }
+
+        public AuthorDetail GetAuthorByAuthorName(string authorName)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Authors.Include(e => e.BooksByAuthor).Single(e => authorName == e.AuthorName);
+
+                var namesOfBooks = new List<string>();
+
+                foreach (var book in entity.BooksByAuthor)
+                {
+                    namesOfBooks.Add(book.Title);
+                }
+
+                return new AuthorDetail()
+                {
+                    AuthorId = entity.AuthorId,
+                    AuthorName = entity.AuthorName,
+                    Birthdate = entity.Birthdate.ToShortDateString(),
                     NamesOfBooksByAuthor = namesOfBooks
                 };
             }

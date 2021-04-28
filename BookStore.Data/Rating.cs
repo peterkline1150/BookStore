@@ -28,7 +28,7 @@ namespace BookStore.Data
             get
             {
                 var totalScore = EnjoymentScore + EngagementScore + AuthorStyleScore;
-                return totalScore / 3;
+                return Math.Round(totalScore / 3, 2);
             }
         }
 

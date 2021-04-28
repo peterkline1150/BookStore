@@ -9,12 +9,12 @@ using System.Web.Http;
 
 namespace BookStore.WebAPI.Controllers
 {
-    [Authorize]
     public class GenreController : ApiController
     {
         private readonly GenreService _service = new GenreService();
 
 
+        [Authorize]
         public IHttpActionResult Post(GenreCreate model)
         {
             if (!ModelState.IsValid)
@@ -34,6 +34,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok(genres);
         }
 
+        [HttpGet]
         public IHttpActionResult Get(int genreId)
         {
             var genre = _service.GetAllBooksInGenre(genreId);
@@ -44,6 +45,18 @@ namespace BookStore.WebAPI.Controllers
             return BadRequest("That ID does not exist.");
         }
 
+        [HttpGet]
+        public IHttpActionResult Get(string genreName)
+        {
+            var genre = _service.GetGenreByGenreName(genreName);
+            if (genre != null)
+            {
+                return Ok(genre);
+            }
+            return BadRequest("That Name does not exist.");
+        }
+
+        [Authorize]
         public IHttpActionResult Put(GenreUpdate model)
         {
             if (!ModelState.IsValid)
@@ -58,6 +71,7 @@ namespace BookStore.WebAPI.Controllers
             return Ok("Genre updated successfully! :^)");
         }
 
+        [Authorize]
         public IHttpActionResult Delete(int genreId)
         {
             if (!_service.DeleteGenre(genreId))

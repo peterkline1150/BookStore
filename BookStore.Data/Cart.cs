@@ -15,15 +15,11 @@ namespace BookStore.Data
             {
                 return 1.07;
             } }
-        public List<Book> BookList { get; set; } = new List<Book>();
+        public List<BooksInIndividualCarts> BookList { get; set; } = new List<BooksInIndividualCarts>();
+        public double Cost { get; set; }
         public double TotalCost { get
             {
-                double totalCost = 0;
-                foreach (var book in BookList)
-                {
-                    totalCost += (book.NumCopiesInCart * book.Price);
-                }
-                return Math.Round(totalCost * Tax, 2);
+                return Math.Round(Cost * Tax, 2);
             } }
         public Guid BuyerId { get; set; }
 

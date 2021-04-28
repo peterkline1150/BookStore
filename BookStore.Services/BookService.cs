@@ -21,10 +21,7 @@ namespace BookStore.Services
                 CompanyId = model.CompanyId,
                 Date = model.Date,
                 NumCopies = model.NumCopies,
-                Price = model.Price,
-                CartId = null,
-                Cart = null,
-                NumCopiesInCart = 0
+                Price = model.Price
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -46,16 +43,22 @@ namespace BookStore.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.Books.Include(e => e.Author).Select(e =>
-                new BookList()
+                var query = ctx.Books.Include(e => e.Author);
+                
+                var listOfBooks = new List<BookList>();
+                foreach (var book in query)
                 {
-                    Title = e.Title,
-                    AuthorName = e.Author.AuthorName,
-                    Date = e.Date,
-                    BookId = e.BookId
-                });
+                    var dateAsString = book.Date.ToShortDateString();
+                    listOfBooks.Add(new BookList()
+                    {
+                        Title = book.Title,
+                        AuthorName = book.Author.AuthorName,
+                        Date = dateAsString,
+                        BookId = book.BookId
+                    });
+                }
 
-                return query.ToArray();
+                return listOfBooks.ToArray();
             }
         }
 
@@ -63,16 +66,22 @@ namespace BookStore.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.Books.Include(e => e.Author).Where(e => e.Date >= startDate && e.Date <= endDate).Select(e =>
-                new BookList()
-                {
-                    Date = e.Date,
-                    BookId = e.BookId,
-                    Title = e.Title,
-                    AuthorName = e.Author.AuthorName
-                });
+                var query = ctx.Books.Include(e => e.Author).Where(e => e.Date >= startDate && e.Date <= endDate);
 
-                return query.ToArray();
+                var listOfBooks = new List<BookList>();
+                foreach (var book in query)
+                {
+                    var dateAsString = book.Date.ToShortDateString();
+                    listOfBooks.Add(new BookList()
+                    {
+                        Title = book.Title,
+                        AuthorName = book.Author.AuthorName,
+                        Date = dateAsString,
+                        BookId = book.BookId
+                    });
+                }
+
+                return listOfBooks.ToArray();
             }
         }
 
@@ -100,10 +109,45 @@ namespace BookStore.Services
                     AuthorName = entity.Author.AuthorName,
                     GenreName = entity.Genre.GenreName,
                     PublishingCompanyName = entity.PublishingCompany.PublishingCompanyName,
-                    Date = entity.Date,
+                    Date = entity.Date.ToShortDateString(),
                     NumCopies = entity.NumCopies,
                     IsAvailable = entity.IsAvailable,
-                    Price = entity.Price,
+                    Price = entity.Price.ToString("$0.00"),
+                    AvRating = entity.AvRating,
+                    IsRecommended = entity.IsRecommended,
+                    RatingsForBook = listOfRatings
+                };
+            }
+        }
+
+        public BookDetail GetBookByName(string bookName)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Books.Include(e => e.Author).Include(e => e.PublishingCompany).Include(e => e.Genre).Include(e => e.RatingsForBook)
+                    .Single(e => e.Title == bookName);
+
+                var listOfRatings = new List<RatingForListInBookDetail>();
+                foreach (var rating in entity.RatingsForBook)
+                {
+                    listOfRatings.Add(new RatingForListInBookDetail()
+                    {
+                        ScoreAverage = rating.ScoreAverage,
+                        Description = rating.Description,
+                        UserId = rating.UserId
+                    });
+                }
+                return new BookDetail()
+                {
+                    BookId = entity.BookId,
+                    Title = entity.Title,
+                    AuthorName = entity.Author.AuthorName,
+                    GenreName = entity.Genre.GenreName,
+                    PublishingCompanyName = entity.PublishingCompany.PublishingCompanyName,
+                    Date = entity.Date.ToShortDateString(),
+                    NumCopies = entity.NumCopies,
+                    IsAvailable = entity.IsAvailable,
+                    Price = entity.Price.ToString("$0.00"),
                     AvRating = entity.AvRating,
                     IsRecommended = entity.IsRecommended,
                     RatingsForBook = listOfRatings
