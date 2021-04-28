@@ -82,7 +82,6 @@
     <Compile Include="CartPurchase.cs" />
     <Compile Include="CartUpdate.cs" />
     <Compile Include="GenreCreate.cs" />
-    <Compile Include="GenreDelete.cs" />
     <Compile Include="GenreDetail.cs" />
     <Compile Include="GenreList.cs" />
     <Compile Include="GenreUpdate.cs" />
