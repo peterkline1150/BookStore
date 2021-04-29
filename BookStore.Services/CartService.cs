@@ -51,9 +51,9 @@ namespace BookStore.Services
                 }
 
                 int bookIdToAddTo = 0;
-                foreach (var book in cartUpdateEntity.BookList)
+                foreach (var book in ctx.BooksInCart)
                 {
-                    if (book.BookId == bookIdToAdd)
+                    if (book.BookId == bookIdToAdd && cartUpdateEntity.BuyerId == book.UserId)
                     {
                         bookIdToAddTo = book.BookId;
                     }
