@@ -102,7 +102,13 @@ namespace BookStore.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity = ctx.PublishingCompanies.Single(e => e.PublishingCompanyId == companyId);
+                var entity = ctx.PublishingCompanies.Include(e => e.BooksPublished).Single(e => e.PublishingCompanyId == companyId);
+
+                if (entity.BooksPublished.Count != 0)
+                {
+                    return false;
+                }
+
                 ctx.PublishingCompanies.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
