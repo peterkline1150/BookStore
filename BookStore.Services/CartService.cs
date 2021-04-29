@@ -41,7 +41,7 @@ namespace BookStore.Services
                     ctx.SaveChanges();
                 }
 
-                var cartUpdateEntity = ctx.Cart.Single(e => e.BuyerId == _buyerId);
+                var cartUpdateEntity = ctx.Cart.Include(e => e.BookList).Single(e => e.BuyerId == _buyerId);
 
                 var bookEntity = ctx.Books.Single(e => e.BookId == bookIdToAdd);
 
@@ -51,9 +51,9 @@ namespace BookStore.Services
                 }
 
                 int bookIdToAddTo = 0;
-                foreach (var book in ctx.BooksInCart)
+                foreach (var book in cartUpdateEntity.BookList)
                 {
-                    if (book.BookId == bookIdToAdd && cartUpdateEntity.BuyerId == book.UserId)
+                    if (book.BookId == bookIdToAdd)
                     {
                         bookIdToAddTo = book.BookId;
                     }
