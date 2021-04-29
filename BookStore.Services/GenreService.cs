@@ -96,7 +96,13 @@ namespace BookStore.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity = ctx.Genres.Single(e => e.GenreId == genreId);
+                var entity = ctx.Genres.Include(e => e.BooksInGenre).Single(e => e.GenreId == genreId);
+
+                if (entity.BooksInGenre.Count != 0)
+                {
+                    return false;
+                }
+
                 ctx.Genres.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }

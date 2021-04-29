@@ -76,13 +76,9 @@ namespace BookStore.WebAPI.Controllers
         {
             if (!_service.DeleteGenre(genreId))
             {
-                return InternalServerError();
+                return BadRequest("Genre must be clear of all books before being deleted.");
             }
             return Ok("Genre removed.");
         }
-
-
-
-
     }
 }

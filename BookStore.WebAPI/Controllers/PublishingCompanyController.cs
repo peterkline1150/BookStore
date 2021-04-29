@@ -85,7 +85,7 @@ namespace BookStore.WebAPI.Controllers
         {
             if (!_service.DeletePublishingCompany(companyId))
             {
-                return InternalServerError();
+                return BadRequest("Publishing Company must be clear of all books before being deleted.");
             }
 
             return Ok("Publishing comany deleted successfully!");
