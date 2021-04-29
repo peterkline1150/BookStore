@@ -75,7 +75,7 @@ namespace BookStore.WebAPI.Controllers
         {
             if (!_service.DeleteAuthor(authorId))
             {
-                return InternalServerError();
+                return BadRequest("Books by author must be cleared before author can be deleted.");
             }
 
             return Ok("Author removed.");
